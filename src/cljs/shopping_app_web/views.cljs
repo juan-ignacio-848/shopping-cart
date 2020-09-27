@@ -96,18 +96,3 @@
      :height "100%"
      :children [[panels @active-panel]]]))
 
-(comment
-
-  (def prods '({:id 1, :name "iPhone 12"} {:id 3, :name "Xiaomi Mi9T"}))
-  (def prods2 [{:id 1, :name "iPhone 12"} {:id 3, :name "Xiaomi Mi9T"}])
-  (for [{:keys [id name]} prods2]
-    name)
-
-  (def mapa {:k1 1 :k2 2})
-  (for [[a b] mapa]
-    b)
-  (def mapa {:1 "uno" :2 "dos"})
-  (mapa :1)
-  (get mapa :1)
-  (:1 mapa)
-  )

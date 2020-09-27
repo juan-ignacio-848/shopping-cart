@@ -15,19 +15,6 @@
   (fn [db]
     (:products db)))
 
-#_(re-frame/reg-sub
-    :shopping-cart/items
-    (fn [db]
-      (mapv (:products db) (get-in db [:cart :items]))))
-
-#_(re-frame/reg-sub
-    :shopping-cart/items
-    (fn [db]
-      (let [freq (frequencies (get-in db [:cart :items]))]
-        (mapv (fn [[id qty]]
-                [((:products db) id) qty])
-              freq))))
-
 (re-frame/reg-sub
   :shopping-cart/items
   (fn [db]
@@ -42,16 +29,7 @@
   (fn [db]
     (:cart db)))
 
-#_(re-frame/reg-event-db
-    :add-to-cart
-    (fn [db [_ product]]
-      (update-in db [:cart :items] (fnil conj []) (:id product))))
-
 (re-frame/reg-event-db
   :add-to-cart
   (fn [db [_ product]]
     (update-in db [:cart :items (:id product)] (fnil inc 0))))
-
-(comment
-
-  )
