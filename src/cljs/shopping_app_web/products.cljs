@@ -4,9 +4,9 @@
 (re-frame/reg-event-db
   ::init-products
   (fn [db]
-    (assoc db :products {1 {:id 1 :name "iPhone 12"}
-                         2 {:id 2 :name "Samsung Galaxy S20"}
-                         3 {:id 3 :name "Xiaomi Mi9T"}})))
+    (assoc db :products {1 {:id 1 :name "iPhone 12" :price 1000}
+                         2 {:id 2 :name "Samsung Galaxy S20" :price 940}
+                         3 {:id 3 :name "Xiaomi Mi9T" :price 320}})))
 
 (re-frame/dispatch-sync [::init-products])
 
@@ -18,11 +18,19 @@
 (re-frame/reg-sub
   :shopping-cart/items
   (fn [db]
-    (println db)
     (let [items (get-in db [:cart :items])]
       (mapv (fn [[id qty]]
               [((:products db) id) qty])
             items))))
+
+(re-frame/reg-sub
+  :shopping-cart/order-total
+  (fn [db]
+    (reduce
+      (fn [total [pid qty]]
+        (+ total (* (:price ((:products db) pid)) qty)))
+      0
+      (get-in db [:cart :items]))))
 
 (re-frame/reg-sub
   :shopping-cart/db

@@ -62,6 +62,7 @@
           [re-com/button
            :label "-"
            :on-click #(re-frame/dispatch [:remove-from-cart id])]])]])
+   [:h3 (str "Order total: $" @(re-frame/subscribe [:shopping-cart/order-total]))]
    [:div (pr-str @(re-frame/subscribe [:shopping-cart/db]))]])
 
 (defn products []
