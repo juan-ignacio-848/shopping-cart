@@ -58,7 +58,10 @@
      [:div
       [:ol
        (for [[{:keys [id name]} qty] products]
-         [:li {:key id} (str name " x" qty)])]])
+         [:li {:key id} (str name " x" qty)
+          [re-com/button
+           :label "-"
+           :on-click #(re-frame/dispatch [:remove-from-cart id])]])]])
    [:div (pr-str @(re-frame/subscribe [:shopping-cart/db]))]])
 
 (defn products []
@@ -72,7 +75,7 @@
           (:name product)
           [re-com/button
            :label "Add to cart"
-           :on-click #(re-frame/dispatch [:add-to-cart product])]])]])
+           :on-click #(re-frame/dispatch [:add-to-cart id])]])]])
    [shopping-cart]
    [:div [link-to-home-page]]])
 

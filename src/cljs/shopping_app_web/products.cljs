@@ -31,5 +31,13 @@
 
 (re-frame/reg-event-db
   :add-to-cart
-  (fn [db [_ product]]
-    (update-in db [:cart :items (:id product)] (fnil inc 0))))
+  (fn [db [_ pid]]
+    (update-in db [:cart :items pid] (fnil inc 0))))
+
+(re-frame/reg-event-db
+  :remove-from-cart
+  (fn [db [_ pid]]
+    (let [qty (get-in db [:cart :items pid])]
+      (if (> qty 1)
+        (update-in db [:cart :items pid] dec)
+        (update-in db [:cart :items] dissoc pid)))))
