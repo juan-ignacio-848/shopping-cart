@@ -49,3 +49,8 @@
       (if (> qty 1)
         (update-in db [:cart :items pid] dec)
         (update-in db [:cart :items] dissoc pid)))))
+
+(re-frame/reg-event-db
+  :empty-cart
+  (fn [db _]
+    (assoc-in db [:cart :items] {})))
